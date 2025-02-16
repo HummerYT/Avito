@@ -14,5 +14,6 @@ FROM alpine:latest AS runner
 
 COPY --from=builder /usr/local/src/bin/app /
 COPY /internal/migrations /internal/migrations
+COPY /test/integration /test/integration
 
 CMD ["/app"]

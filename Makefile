@@ -8,8 +8,12 @@ down:
 	docker compose down
 
 unit:
-	go test ./...
+	go test ./... -short
 
 cover:
-	go test -coverprofile="coverage.out" ./...
+	go test -coverprofile="coverage.out" ./... -short
 	go tool cover -func="coverage.out"
+
+integration: up
+	go test test/integration
+	docker compose down
