@@ -14,9 +14,10 @@ type InventoryItem struct {
 }
 
 type TransactionItem struct {
-	FromUserID string `json:"from_user"`
-	Username   string `json:"to_user"`
-	ToUserID   string
-	Amount     int64     `json:"amount"`
-	CreatedAt  time.Time `json:"created_at"`
+	FromUserID   string `json:"from_user"`
+	FromUsername string
+	ToUserName   string
+	ToUserID     string
+	Amount       int64     `json:"amount"`
+	CreatedAt    time.Time `json:"created_at"`
 }

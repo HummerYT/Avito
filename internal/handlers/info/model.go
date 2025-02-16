@@ -49,13 +49,13 @@ func ConvertInfoResponse(infoResp models.InfoResponse, currentUserID, username s
 		switch {
 		case tx.ToUserID == currentUserID:
 			out.CoinHistory.Received = append(out.CoinHistory.Received, ReceivedItem{
-				FromUser: username,
+				FromUser: tx.FromUsername,
 				Amount:   tx.Amount,
 			})
 
 		case tx.FromUserID == currentUserID:
 			out.CoinHistory.Sent = append(out.CoinHistory.Sent, SentItem{
-				ToUser: tx.Username,
+				ToUser: tx.ToUserName,
 				Amount: tx.Amount,
 			})
 		}

@@ -63,11 +63,12 @@ func (uc *Usecase) GetInfo(ctx context.Context, userID string) (username string,
 	}
 	for _, t := range txs {
 		res.Transactions = append(res.Transactions, models.TransactionItem{
-			FromUserID: t.FromUserID,
-			ToUserID:   t.ToUserID,
-			Amount:     t.Amount,
-			CreatedAt:  t.CreatedAt,
-			Username:   t.Username,
+			FromUserID:   t.FromUserID,
+			ToUserID:     t.ToUserID,
+			Amount:       t.Amount,
+			CreatedAt:    t.CreatedAt,
+			FromUsername: t.FromUsername,
+			ToUserName:   t.ToUserName,
 		})
 	}
 

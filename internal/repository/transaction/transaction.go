@@ -33,9 +33,10 @@ func (r *Repository) InsertTransaction(ctx context.Context, tx pgx.Tx, id, fromU
 
 func (r *Repository) GetUserTransactions(ctx context.Context, tx pgx.Tx, userID string) ([]models.TransactionItem, error) {
 	query := `
-        SELECT from_user_id, to_user_id, amount, created_at, users.username
+        SELECT from_user_id, to_user_id, amount, created_at, u1.username, u2.username
         FROM transactions
-        LEFT JOIN users ON users.id = transactions.to_user_id
+        LEFT JOIN users as u1 ON u1.id = transactions.to_user_id
+        LEFT JOIN users as u2 ON u2.id = transactions.from_user_id
         WHERE from_user_id = $1
            OR to_user_id = $1
         ORDER BY created_at DESC
@@ -52,7 +53,7 @@ func (r *Repository) GetUserTransactions(ctx context.Context, tx pgx.Tx, userID 
 	var result []models.TransactionItem
 	for rows.Next() {
 		var t models.TransactionItem
-		if err := rows.Scan(&t.FromUserID, &t.ToUserID, &t.Amount, &t.CreatedAt, &t.Username); err != nil {
+		if err := rows.Scan(&t.FromUserID, &t.ToUserID, &t.Amount, &t.CreatedAt, &t.ToUserName, &t.FromUsername); err != nil {
 			return nil, fmt.Errorf("failed to scan transaction row: %w", err)
 		}
 		result = append(result, t)
